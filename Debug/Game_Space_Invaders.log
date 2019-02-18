@@ -1,0 +1,14 @@
+﻿  main.cpp
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(28): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(49): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(50): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(60): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(82): warning C4244: аргумент: преобразование "unsigned int" в "float", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(87): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(89): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(104): warning C4305: =: усечение из "double" в "float"
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(105): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(111): warning C4305: =: усечение из "double" в "float"
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(112): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+c:\users\angela\source\repos\game_space_invaders\game_space_invaders\main.cpp(131): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  Game_Space_Invaders.vcxproj -> C:\Users\Angela\source\repos\Game_Space_Invaders\Debug\Game_Space_Invaders.exe
