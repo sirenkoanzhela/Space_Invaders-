@@ -1,37 +1,39 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Unit.h"
+#include <vector>
+#include <iostream>
+using namespace std;
 class Invader :public Unit
 {
+	float moveTimer;
 public:
 	Invader(Image &image, float X, float Y, int W, int H, String Name) :Unit(image, X, Y, W, H, Name) {
 		sprite.setTextureRect(IntRect(0, 0, w, h));
-		dx = 0.1;//даем скорость.этот объект всегда двигается
+		dx = 0.03;//даем скорость.этот объект всегда двигается
+		moveTimer = 0;
 	}
 
 	void checkCollisionWithMap(float Dx, float Dy) override//ф ция проверки столкновений с картой
 	{
-		for (int i = y / 32; i < (y + h) / 32; i++)//проходимся по элементам карты
-			for (int j = x / 32; j < (x + w) / 32; j++)
-			{
-				//if (TileMap[i][j] == '0')//если элемент наш тайлик земли, то
-				//{
-				//	if (Dx>0) { x = j * 32 - w; dx = -0.1; }//с правым краем карты
-				//	if (Dx<0) { x = j * 32 + 32; dx = 0.1; }// с левым краем карты
-				//}
-			}
-	}
 
+	}
+	void move(float time)
+	{
+		x += dx * time;//реализация движения по горизонтали
+		moveTimer += time;//наращиваем таймер
+		if (moveTimer > 2000) 
+		{ 
+			dx *= -1; 
+			moveTimer = 0; 
+		}//если прошло примерно 2 сек, то меняется направление движения платформы,а таймер обнуляется
+	}
 	void update(float time)
 	{
-
+		move(time);
 		checkCollisionWithMap(dx, 0);//обрабатываем столкновение по Х
 		x += dx * time;
 		sprite.setPosition(x + w / 2, y + h / 2); //задаем позицию спрайта в место его центра
 		if (health <= 0) { isLive = false; }
-	}
-	Sprite draw() override
-	{
-		return sprite;
 	}
 };

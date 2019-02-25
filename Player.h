@@ -42,6 +42,7 @@ public:
 				}
 			}
 	}
+	
 	void update(float time) override
 	{
 		control();//функция управления персонажем
@@ -59,9 +60,5 @@ public:
 		sprite.setPosition(x + w / 2, y + h / 2); //задаем позицию спрайта в место его центра
 		if (health <= 0) { isLive = false; }
 		if (!isMove) { speed = 0; }
-	}
-	Sprite draw() override
-	{
-		return sprite;
 	}
 };
