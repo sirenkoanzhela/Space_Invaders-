@@ -4,7 +4,7 @@ using namespace sf;
 
 class Unit {
 protected:
-	float dx, dy, x, y, speed;//добавили переменную таймер для будущих целей
+	float dx, dy, x, y, speed;
 	int w, h, health;
 	bool isLive, isMove;
 	enum { left, right, down, stay } state;//добавляем тип перечисления - состояние объекта
@@ -21,11 +21,29 @@ public:
 		sprite.setOrigin(w / 2, h / 2);
 	}
 
-	Sprite draw() 
+	Sprite draw() //отрисовка СПРАЙТА
 	{
 		return sprite;
 	}
-	virtual void checkCollisionWithMap(float, float) = 0;
-	virtual void update(float) = 0;
-	
+
+	FloatRect getRect() {  //ВОЗВРАЩАЕТ ПРЯМОУГОЛЬНИК СПРАЙТА
+		return FloatRect(x, y, w, h);
+	}
+
+	bool isAlive()  //ВОЗВАРАЩАЕТ СОСТОЯНИЕ ОБЪЕКТА (жив-не жив)
+	{
+		return isLive;
+	}
+
+	void death()
+	{
+		isLive = false;
+	}
+
+	float getCoordinateX()
+	{
+		return x;
+	}
+	virtual void update(float) = 0;  
+	~Unit() {};
 };

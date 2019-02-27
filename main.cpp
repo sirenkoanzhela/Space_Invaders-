@@ -33,12 +33,14 @@ int main()
 	Unit*p = new Player(heroImage, (window.getSize().x/2), (window.getSize().y-75), 75.0f, 75.0f,"player");//создаем объект p класса player,задаем "hero.png" как имя файла+расширение, далее координата Х,У, ширина, высота.
 	
 
+           //////////////СОЗДАНИЕ ВРАГОВ////////////////
 	list<Invader*>enemies;
 	list<Invader*>::iterator it;
-
-	for (int i = 0; i < 10; i++)
-	{
-		enemies.push_back(new Invader(enemyImage, (10+60)*i, 10, 50.0f, 50.0f, "enemy"));
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 10; j++)
+		{
+			enemies.push_back(new Invader(enemyImage, (10 + 60)*j, i*50, 50.0f, 50.0f, "enemy"));
+		}
 	}
 
 	while (window.isOpen())
@@ -47,7 +49,7 @@ int main()
 		float time = clock.getElapsedTime().asMicroseconds();
 
 		clock.restart();
-		time = time / 500;
+		time = time / 800;
 
 
 		sf::Event event;
@@ -56,16 +58,18 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-
 		p->update(time);//оживляем объект p класса Player с помощью времени sfml, передавая время в качестве параметра функции update. благодаря этому персонаж может двигаться
-		for (it = enemies.begin(); it != enemies.end(); it++) { (*it)->update(time); }//для всех элементов списка(пока это только враги,но могут быть и пули к примеру) активируем ф-цию update
-
-																						//easyEnemy.update(time);//старый вариант update врага
-
-
+		for (it = enemies.begin(); it != enemies.end();)
+		{
+			(*it)->update(time);//(по сути для тех, кто жив)
+			if ((*it)->isAlive() == false) { it = enemies.erase(it); delete (*it); }
+			if ((*it)->getRect().intersects(p->getRect())) { (*it)->death(); exit(0); } //rect() врага пересекается с rect() игрока
+			else it++;
+		}
+		
 		window.clear();
 
-		/////////////////////////////Рисуем карту/////////////////////
+		///////////////////////ОТРИСОВКА КАРТЫ/////////////////////
 		for (int i = 0; i < HEIGHT_MAP; i++)
 			for (int j = 0; j < WIDTH_MAP; j++)
 			{
@@ -75,12 +79,12 @@ int main()
 
 				s_map.setPosition(j * 32, i * 32);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
 
-				window.draw(s_map);//рисуем квадратики на экран
+				window.draw(s_map);
 			}
 		for (it = enemies.begin(); it != enemies.end(); it++) {
-			window.draw((*it)->draw()); //рисуем entities объекты (сейчас это только враги)
+			window.draw((*it)->draw()); 
 		}
-		window.draw(p->draw());//рисуем спрайт объекта p класса player
+		window.draw(p->draw());
 		window.display();
 	}
 	return 0;

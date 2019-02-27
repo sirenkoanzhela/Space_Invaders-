@@ -4,7 +4,8 @@
 
 class Player :public Unit
 {
-	int playerScore;//эта переменная может быть только у игрока
+	private:
+	int playerScore;
 public:
 	Player(Image &image, float X, float Y, int W, int H, String Name) :Unit(image, X, Y, W, H, Name)
 	{
@@ -28,13 +29,13 @@ public:
 		}
 	}
 
-	void checkCollisionWithMap(float Dx, float Dy)//ф ция проверки столкновений с картой
+	void checkCollisionWithMap(float Dx, float Dy)//ф-ция проверки столкновений с картой
 	{
 		for (int i = y / 32; i < (y + h) / 32; i++)//проходимся по элементам карты
 			for (int j = x / 32; j<(x + w) / 32; j++)
 			{
 
-				if (TileMap[i][j] == '0')//если элемент наш тайлик земли? то
+				if (TileMap[i][j] == '0')//если элемент [ 0 ], то:
 				{
 					if (Dy>0) { y = i * 32 - h;  dy = 0; }//по Y вниз=>идем в пол(стоим на месте) или падаем. В этот момент надо вытолкнуть персонажа и поставить его на землю
 					if (Dx>0) { x = j * 32 - w; }//с правым краем карты
@@ -42,10 +43,10 @@ public:
 				}
 			}
 	}
-	
+
 	void update(float time) override
 	{
-		control();//функция управления персонажем
+		control();
 		switch (state)//тут делаются различные действия в зависимости от состояния
 		{
 		case right: dx = speed; break;//состояние идти вправо
