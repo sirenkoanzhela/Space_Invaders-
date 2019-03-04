@@ -2,17 +2,29 @@
 #include <string>
 #include "map.h"
 #include "Player.h"
-#include"Invader.h"
+#include "Invader.h"
+#include "Bullet.h"
 #include <list>
 #include <algorithm>
 
 using namespace sf;
 using namespace std;
 
+class Game
+{
+	RenderWindow*win; ///??????
+public:
+	Game(RenderWindow*win) {};
+	void test(RenderWindow*win)
+	{
 
+	}
+};
 int main()
 {
 	RenderWindow window(sf::VideoMode(800, 600), "Space Invaders");
+	RenderWindow*win = &window;
+	Game game(win);
 
 	Clock clock;
 
@@ -23,6 +35,8 @@ int main()
 	Sprite s_map;//создаём спрайт для карты
 	s_map.setTexture(map);//заливаем текстуру спрайтом
 
+	Image BulletImage;//изображение для пули
+	BulletImage.loadFromFile("images/bullet.png");//загрузили картинку в объект изображения
 
 	Image heroImage;
 	heroImage.loadFromFile("images/hero.png");
@@ -34,8 +48,8 @@ int main()
 	
 
            //////////////СОЗДАНИЕ ВРАГОВ////////////////
-	list<Invader*>enemies;
-	list<Invader*>::iterator it;
+	list<Unit*>enemies;
+	list<Unit*>::iterator it;
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 10; j++)
 		{
@@ -57,13 +71,21 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (p->ShootingStatus() == true) 
+			{ 
+			p->makeShot(); 
+			enemies.push_back(new Bullet(BulletImage, "Bullet", p->getCoordinateX(), p->getCoordinateY(), 20, 20)); 
+			}
+			//если выстрелили, то появляется пуля. enum передаем как int 
 		}
+
+
 		p->update(time);//оживляем объект p класса Player с помощью времени sfml, передавая время в качестве параметра функции update. благодаря этому персонаж может двигаться
 		for (it = enemies.begin(); it != enemies.end();)
 		{
 			(*it)->update(time);//(по сути для тех, кто жив)
 			if ((*it)->isAlive() == false) { it = enemies.erase(it); delete (*it); }
-			if ((*it)->getRect().intersects(p->getRect())) { (*it)->death(); exit(0); } //rect() врага пересекается с rect() игрока
+			if ((*it)->getRect().intersects(p->getRect())) { (*it)->death(); } //rect() врага пересекается с rect() игрока
 			else it++;
 		}
 		

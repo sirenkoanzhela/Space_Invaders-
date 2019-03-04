@@ -61,5 +61,9 @@ public:
 		sprite.setPosition(x + w / 2, y + h / 2); //задаем позицию спрайта в место его центра
 		if (health <= 0) { isLive = false; }
 		if (!isMove) { speed = 0; }
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			isShoot = true;
+		}
 	}
 };
